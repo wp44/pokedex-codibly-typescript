@@ -1,0 +1,60 @@
+import React from "react";
+import colors from "../utils/colors";
+
+export interface PokemonCardProps {
+  item: Array<Object>;
+}
+
+const PokemonCard: React.SFC<PokemonCardProps> = ({ item }) => {
+  const image = (item as any).img;
+  const color = colors[(item as any).type[0].toLowerCase()];
+  console.log("item", item);
+  return (
+    <div
+      style={{
+        height: 300,
+        width: 200,
+        margin: 10,
+        borderRadius: 10,
+        display: "flex",
+        flexDirection: "column"
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+          position: "relative"
+        }}
+      >
+        <div
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+            position: "absolute",
+            top: 15
+          }}
+        >
+          <img src={image} />
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundColor: color,
+          flex: 2,
+          borderRadius: 10,
+          paddingTop: 30
+        }}
+      >
+        <p style={{ fontSize: 20, color: "white", textAlign: "center" }}>
+          {(item as any).name}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default PokemonCard;
