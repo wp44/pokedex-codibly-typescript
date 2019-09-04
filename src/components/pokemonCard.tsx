@@ -40,7 +40,17 @@ const PokemonCard: React.SFC<PokemonCardProps> = ({ item }) => {
         >
           <img src={image} />
         </div>
+        <p
+          style={{
+            fontSize: 12,
+            color: "grey",
+            position: "absolute",
+            bottom: -8,
+            left: 8
+          }}
+        >{`#${(item as any).num}`}</p>
       </div>
+
       <div
         style={{
           backgroundColor: color,
