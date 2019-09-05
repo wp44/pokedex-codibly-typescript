@@ -3,14 +3,15 @@ import colors from "../utils/colors";
 
 export interface PokemonCardProps {
   item: Array<Object>;
+  onClick: Function;
 }
 
-const PokemonCard: React.SFC<PokemonCardProps> = ({ item }) => {
+const PokemonCard: React.SFC<PokemonCardProps> = ({ item, onClick }) => {
   const image = (item as any).img;
   const color = colors[(item as any).type[0].toLowerCase()];
-  console.log("item", item);
   return (
     <div
+      onClick={() => onClick((item as any).id)}
       style={{
         height: 300,
         width: 200,
