@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 import PokemonCard from "./components/pokemonCard";
 import PokemonTypeLabelProps from "./components/pokemonTypeLabel";
 import pokemonTypes from "./utils/pokemonTypes";
@@ -72,65 +73,24 @@ const App: React.FC = () => {
   console.log("pokemons", pokemons);
   console.log("filteredType", filteredType);
   return (
-    <div style={{ backgroundColor: "#282c34", height: "100%" }}>
-      <div
-        style={{
-          height: 70,
-          backgroundColor: "#1B1D23",
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex"
-        }}
-      >
-        <div
-          style={{
-            borderColor: "lightgrey",
-            borderWidth: 0.5,
-            borderStyle: "solid",
-            height: 40,
-            borderRadius: 20,
-            width: "100%",
-            marginRight: 20,
-            marginLeft: 20,
-            display: "flex",
-            alignItems: "center"
-          }}
-        >
+    <Container>
+      <SearchBar>
+        <SearchBox>
           <FontAwesomeIcon
             style={{ fontSize: 18, color: "lightgrey", marginLeft: 12 }}
             icon={faSearch}
           />
-          <input
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              color: "white",
-              fontSize: 20,
-              marginLeft: 12,
-              marginRight: 12,
-              width: "100%",
-              outline: "none",
-              marginBottom: 2
-            }}
+          <SearchInput
             placeholder="Search for Pokemon..."
             value={search}
             onChange={e => {
               setSearch(e.target.value);
               filter(e.target.value);
             }}
-          ></input>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly",
-          marginRight: 20,
-          marginLeft: 20
-        }}
-      >
+          />
+        </SearchBox>
+      </SearchBar>
+      <TypesContainer>
         {pokemonTypes &&
           pokemonTypes.map((item, i) => (
             <PokemonTypeLabelProps
@@ -140,15 +100,8 @@ const App: React.FC = () => {
               onClick={type => handleTypeFilter(type)}
             />
           ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-evenly"
-        }}
-      >
+      </TypesContainer>
+      <PokemonListContainer>
         {filteredPokemons &&
           filteredPokemons.map((item, i) => (
             <PokemonCard
@@ -167,9 +120,61 @@ const App: React.FC = () => {
             There is no pokemon that fulfill that cryteria
           </p>
         )}
-      </div>
-    </div>
+      </PokemonListContainer>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  background-color: #282c34;
+  height: 100%;
+`;
+
+const SearchBar = styled.div`
+  height: 70px;
+  background-color: #1b1d23;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+`;
+
+const SearchBox = styled.div`
+  border: 0.5px solid lightgrey;
+  height: 40px;
+  border-radius: 20px;
+  width: 100%;
+  margin-right: 20px;
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+`;
+
+const SearchInput = styled.input`
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  margin-left: 12px;
+  margin-right: 12px;
+  width: 100%;
+  outline: none;
+  margin-bottom: 2px;
+`;
+
+const TypesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-right: 20px;
+  margin-left: 20px;
+`;
+
+const PokemonListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+`;
 
 export default App;

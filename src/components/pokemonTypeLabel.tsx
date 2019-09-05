@@ -1,5 +1,6 @@
 import React from "react";
 import colors from "../utils/colors";
+import styled from "styled-components";
 
 export interface PokemonTypeLabelProps {
   label: String;
@@ -15,24 +16,27 @@ const PokemonTypeLabel: React.SFC<PokemonTypeLabelProps> = ({
   const color = colors[label as any];
   const active = filteredType.includes(label);
   return (
-    <div
-      onClick={() => onClick(label)}
-      style={{
-        backgroundColor: color,
-        paddingLeft: 25,
-        paddingRight: 25,
-        borderRadius: 25,
-        marginRight: 2,
-        marginLeft: 2,
-        marginTop: 10,
-        opacity: active ? 1 : 0.5
-      }}
-    >
-      <p style={{ fontSize: 16, color: "white", textAlign: "center" }}>
-        {label}
-      </p>
-    </div>
+    <Label onClick={() => onClick(label)} active={active} color={color}>
+      <Text>{label}</Text>
+    </Label>
   );
 };
+
+const Label = styled.div`
+  background-color: ${props => props.color};
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 25px;
+  margin-right: 2px;
+  margin-left: 2px;
+  margin-top: 10px;
+  opacity: ${props => (props.active ? 1 : 0.5)};
+`;
+
+const Text = styled.p`
+  font-size: 16px;
+  color: white;
+  text-align: center;
+`;
 
 export default PokemonTypeLabel;
