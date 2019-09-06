@@ -5,6 +5,7 @@ import styled from "styled-components";
 import PokemonCard from "./components/pokemonCard";
 import PokemonTypeLabelProps from "./components/pokemonTypeLabel";
 import pokemonTypes from "./utils/pokemonTypes";
+import PokemonDetailsPopupProps from "./components/pokemonDetailsPopup";
 
 export interface App {
   pokemons: any;
@@ -73,14 +74,11 @@ const App: React.FC = () => {
   return (
     <React.Fragment>
       {selectedPokemon && (
-        <Overlay onClickCapture={() => setSelectedPokemon(null)}>
-          <Popup
-            onClick={e => {
-              e.stopPropagation();
-              console.log("child");
-            }}
-          />
-        </Overlay>
+        <PokemonDetailsPopupProps
+          selectedPokemon={selectedPokemon}
+          onClickOverlay={() => setSelectedPokemon(null)}
+          pokemonShortInfo={pokemons[selectedPokemon - 1]}
+        />
       )}
       <Container selectedPokemon={selectedPokemon}>
         <SearchBar>
@@ -191,24 +189,6 @@ const PokemonListContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-`;
-
-const Overlay = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Popup = styled.div`
-  height: 400px;
-  max-width: 600px;
-  min-width: 300px;
-  background-color: white;
-  border-radius: 20px;
 `;
 
 export default App;

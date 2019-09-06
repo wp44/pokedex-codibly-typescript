@@ -10,7 +10,6 @@ export interface PokemonCardProps {
 const PokemonCard: React.SFC<PokemonCardProps> = ({ item, onClick }) => {
   const image = (item as any).img;
   const color = colors[(item as any).type[0].toLowerCase()];
-  console.log("item", item);
   return (
     <CardContainer onClick={() => onClick((item as any).id)}>
       <HeaderContainer>
