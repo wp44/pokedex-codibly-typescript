@@ -31,6 +31,11 @@ const Label = styled.div`
   margin-left: 2px;
   margin-top: 10px;
   opacity: ${props => (props.active ? 1 : 0.5)};
+  transition: ease-in-out 0.1s;
+  :hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
 `;
 
 const Text = styled.p`

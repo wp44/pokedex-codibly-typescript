@@ -70,69 +70,85 @@ const App: React.FC = () => {
     setSelectedPokemon(pokemonId);
   };
 
-  console.log("pokemons", pokemons);
-  console.log("filteredType", filteredType);
   return (
-    <Container>
-      <SearchBar>
-        <SearchBox>
-          <FontAwesomeIcon
-            style={{ fontSize: 18, color: "lightgrey", marginLeft: 12 }}
-            icon={faSearch}
-          />
-          <SearchInput
-            placeholder="Search for Pokemon..."
-            value={search}
-            onChange={e => {
-              setSearch(e.target.value);
-              filter(e.target.value);
+    <React.Fragment>
+      {selectedPokemon && (
+        <Overlay onClickCapture={() => setSelectedPokemon(null)}>
+          <Popup
+            onClick={e => {
+              e.stopPropagation();
+              console.log("child");
             }}
           />
-        </SearchBox>
-      </SearchBar>
-      <TypesContainer>
-        {pokemonTypes &&
-          pokemonTypes.map((item, i) => (
-            <PokemonTypeLabelProps
-              filteredType={filteredType}
-              label={item}
-              key={i}
-              onClick={type => handleTypeFilter(type)}
+        </Overlay>
+      )}
+      <Container selectedPokemon={selectedPokemon}>
+        <SearchBar>
+          <SearchBox>
+            <FontAwesomeIcon
+              style={{ fontSize: 18, color: "lightgrey", marginLeft: 12 }}
+              icon={faSearch}
             />
-          ))}
-      </TypesContainer>
-      <PokemonListContainer>
-        {filteredPokemons &&
-          filteredPokemons.map((item, i) => (
-            <PokemonCard
-              item={item}
-              key={i}
-              onClick={pokemonId => handlePickPokemon(pokemonId)}
+            <SearchInput
+              placeholder="Search for Pokemon..."
+              value={search}
+              onChange={e => {
+                setSearch(e.target.value);
+                filter(e.target.value);
+              }}
             />
-          ))}
-        {filteredPokemons && filteredPokemons.length === 0 && (
-          <p
-            style={{
-              color: "white",
-              fontSize: 20
-            }}
-          >
-            There is no pokemon that fulfill that cryteria
-          </p>
-        )}
-      </PokemonListContainer>
-    </Container>
+          </SearchBox>
+        </SearchBar>
+        <TypesContainer>
+          {pokemonTypes &&
+            pokemonTypes.map((item, i) => (
+              <PokemonTypeLabelProps
+                filteredType={filteredType}
+                label={item}
+                key={i}
+                onClick={type => handleTypeFilter(type)}
+              />
+            ))}
+        </TypesContainer>
+        <PokemonListContainer>
+          {filteredPokemons &&
+            filteredPokemons.map((item, i) => (
+              <PokemonCard
+                item={item}
+                key={i}
+                onClick={pokemonId => handlePickPokemon(pokemonId)}
+              />
+            ))}
+          {filteredPokemons && filteredPokemons.length === 0 && (
+            <p
+              style={{
+                color: "white",
+                fontSize: 20
+              }}
+            >
+              There is no pokemon that fulfill that cryteria
+            </p>
+          )}
+        </PokemonListContainer>
+      </Container>
+    </React.Fragment>
   );
 };
 
 const Container = styled.div`
   background-color: #282c34;
-  height: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  ${({ selectedPokemon }) =>
+    selectedPokemon &&
+    `
+    filter: blur(2px)
+  `}
 `;
 
 const SearchBar = styled.div`
   height: 70px;
-  background-color: #1b1d23;
+  background-color: #22252c;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -175,6 +191,24 @@ const PokemonListContainer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+`;
+
+const Overlay = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Popup = styled.div`
+  height: 400px;
+  max-width: 600px;
+  min-width: 300px;
+  background-color: white;
+  border-radius: 20px;
 `;
 
 export default App;
